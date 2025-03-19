@@ -1,0 +1,11 @@
+{
+  "improvements": [
+    {
+      "test_case": "用户订单联表查询",
+      "single_column_improvement": 27.510645566201124,
+      "multi_column_improvement": 66.66984444762222
+    }
+  ],
+  "avg_single_improvement": 27.510645566201124,
+  "avg_multi_improvement": 66.66984444762222
+}
