@@ -63,6 +63,9 @@ python mysql_index_analyzer/scripts/main.py all --scale 0.1
 
 ### 命令行界面
 
+### 由于有使用到mysql的用户名和密码相关信息，请在代码中搜索DB_config自行修改对应内容，之后我会考虑将这部分内容
+### 填入config配置中并封装，作为后续更新
+
 本工具提供了简单的命令行界面，可以方便地执行各项功能：
 
 ```bash
