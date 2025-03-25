@@ -25,6 +25,13 @@ mysql_index_analyzer/
 │   └── check_environment.py    # 环境检查脚本
 ├── visualization/        # 存放生成的图表
 └── logs/                 # 存放日志文件
+
+slow_query_analyzer/     # 独立的慢查询日志分析工具
+├── parse_slow_log.py          # 简化版慢查询日志分析工具（无需MySQL连接）
+├── example-slow-query.log     # 示例慢查询日志文件 
+├── slow_query_analysis_report.md  # 分析报告示例
+├── mysql_slow_query_howto.md  # 使用指南
+└── README.md                  # 慢查询分析工具说明文档
 ```
 
 ## 环境要求
@@ -62,8 +69,6 @@ python mysql_index_analyzer/scripts/main.py all --scale 0.1
 ## 使用方法
 
 ### 命令行界面
-
-### 由于有使用到mysql的用户名和密码相关信息，请在代码中搜索DB_config自行修改对应内容，之后我会考虑将这部分内容填入config配置中并封装，作为后续更新
 
 本工具提供了简单的命令行界面，可以方便地执行各项功能：
 
@@ -154,7 +159,11 @@ python mysql_index_analyzer/scripts/cleanup.py
 
 ## 慢查询日志分析
 
-本工具还提供了慢查询日志分析功能，可以帮助您分析生产环境中的实际查询性能问题：
+本工具提供了两种慢查询日志分析方案：
+
+### 1. 集成式分析（需要MySQL连接）
+
+使用集成在主系统中的分析功能，适合已经配置好MySQL连接的用户：
 
 1. 确保MySQL已启用慢查询日志：
 ```sql
@@ -168,7 +177,19 @@ SET GLOBAL slow_query_log_file = '/var/log/mysql/slow-query.log';
 python mysql_index_analyzer/scripts/log_analyzer.py /var/log/mysql/slow-query.log
 ```
 
-3. 查看分析结果和优化建议
+### 2. 独立式分析（无需MySQL连接）
+
+我们还提供了一个专门的慢查询日志分析工具，无需连接MySQL服务器即可分析日志文件：
+
+```bash
+# 使用简化版分析工具
+python slow_query_analyzer/parse_slow_log.py <慢查询日志文件路径>
+
+# 例如，使用示例日志文件
+python slow_query_analyzer/parse_slow_log.py slow_query_analyzer/example-slow-query.log
+```
+
+更多详细信息请参阅 [慢查询分析工具文档](slow_query_analyzer/README.md)。
 
 ## 使用示例
 
@@ -204,6 +225,7 @@ python mysql_index_analyzer/scripts/main.py all --scale 0.1
 - 请确保MySQL服务正在运行且配置正确
 - 默认使用root用户连接本地MySQL，如需修改连接信息，请编辑相应脚本中的DB_CONFIG变量
 - 生产环境分析前建议备份数据库
+- 使用简化版慢查询日志分析工具可以在不连接MySQL的情况下进行日志分析
 
 ## 贡献
 
