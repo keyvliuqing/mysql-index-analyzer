@@ -1,0 +1,27 @@
+# Time: 2023-12-15T10:30:45.123456Z
+# User@Host: root[root] @ localhost [127.0.0.1]
+# Query_time: 3.456789  Lock_time: 0.000123  Rows_sent: 1234  Rows_examined: 50000
+use index_analyzer_db;
+SELECT u.username, o.order_date, o.total_price 
+FROM users u 
+JOIN orders o ON u.id = o.user_id 
+WHERE u.credit_score > 700 
+LIMIT 1000;
+
+# Time: 2023-12-15T11:15:32.654321Z
+# User@Host: root[root] @ localhost [127.0.0.1]
+# Query_time: 2.345678  Lock_time: 0.000321  Rows_sent: 50  Rows_examined: 25000
+use index_analyzer_db;
+SELECT p.category, COUNT(*) as order_count, SUM(o.total_price) as total_sales 
+FROM products p 
+JOIN orders o ON p.id = o.product_id 
+GROUP BY p.category;
+
+# Time: 2023-12-15T14:22:18.987654Z
+# User@Host: root[root] @ localhost [127.0.0.1]
+# Query_time: 1.876543  Lock_time: 0.000432  Rows_sent: 500  Rows_examined: 15000
+use index_analyzer_db;
+SELECT * 
+FROM users 
+WHERE registration_date BETWEEN '2022-01-01' AND '2023-01-01' 
+AND status = 'active'; 
